@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
-        <Toploader color="#4B76C9" />
+        <Toploader color="#4B76C9" showSpinner={false} height={2.8} />
         <Providers>{children}</Providers>
       </body>
     </html>

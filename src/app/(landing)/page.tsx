@@ -1,6 +1,9 @@
+import { DiscordMessage } from "@/components/DiscordMessage";
 import { Heading } from "@/components/Heading";
 import { MaxWidthWrapper } from "@/components/MaxWidthWrapper";
+import { MockDiscordUI } from "@/components/MockDiscordUI";
 import { ShinyButton } from "@/components/ShinyButton";
+import { AnimatedList } from "@/components/ui/animated-list";
 import { CheckIcon } from "lucide-react";
 
 export default function Page() {
@@ -52,7 +55,61 @@ export default function Page() {
           </div>
         </MaxWidthWrapper>
       </section>
-      <section></section>
+
+      <section className="relative bg-brand-25 pb-4">
+        <div className="absolute inset-x-0 inset-y-24 bg-brand-700" />
+
+        <div className="relative mx-auto">
+          <MaxWidthWrapper className="relative">
+            <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
+              <MockDiscordUI>
+                <AnimatedList className="flex flex-col-reverse">
+                  <DiscordMessage
+                    avatarSrc="/brand-asset-profile-picture.png"
+                    avatarAlt="PingPanda Avatar"
+                    username="PingPanda"
+                    timestamp="Today at 12:35PM"
+                    badgeText="SignUp"
+                    badgeColor="#43b581"
+                    title="👤 New user signed up"
+                    content={{
+                      name: "Darshan Rijal",
+                      email: "darshanrijal0@gmail.com",
+                    }}
+                  />
+                  <DiscordMessage
+                    avatarSrc="/brand-asset-profile-picture.png"
+                    avatarAlt="PingPanda Avatar"
+                    username="PingPanda"
+                    timestamp="Today at 12:35PM"
+                    badgeText="Revenue"
+                    badgeColor="#faa61a"
+                    title="💰 Payment received"
+                    content={{
+                      amount: "NPR 5000",
+                      email: "darshanrijal0@gmail.com",
+                      plan: "PRO",
+                    }}
+                  />
+                  <DiscordMessage
+                    avatarSrc="/brand-asset-profile-picture.png"
+                    avatarAlt="PingPanda Avatar"
+                    username="PingPanda"
+                    timestamp="Today at 5:11AM"
+                    badgeText="Milestone"
+                    badgeColor="#5865f2"
+                    title="🚀 Revenue Milestone Achieved"
+                    content={{
+                      recurringRevenue: "NPR 150000",
+                      growth: "+8.2%",
+                    }}
+                  />
+                </AnimatedList>
+              </MockDiscordUI>
+            </div>
+          </MaxWidthWrapper>
+        </div>
+      </section>
       <section></section>
       <section></section>
     </>

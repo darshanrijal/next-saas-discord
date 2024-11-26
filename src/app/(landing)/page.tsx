@@ -1,10 +1,11 @@
 import { DiscordMessage } from "@/components/DiscordMessage";
 import { Heading } from "@/components/Heading";
+import { Icons } from "@/components/icons";
 import { MaxWidthWrapper } from "@/components/MaxWidthWrapper";
 import { MockDiscordUI } from "@/components/MockDiscordUI";
 import { ShinyButton } from "@/components/ShinyButton";
 import { AnimatedList } from "@/components/ui/animated-list";
-import { CheckIcon } from "lucide-react";
+import { CheckIcon, Star } from "lucide-react";
 import Image from "next/image";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
@@ -278,7 +279,93 @@ export default function Page() {
         </MaxWidthWrapper>
       </section>
 
-      <section></section>
+      <section className="relative bg-white py-24 sm:py-32">
+        <MaxWidthWrapper className="flex flex-col items-center gap-16 sm:gap-20">
+          <div>
+            <h2 className="text-center text-base/7 font-semibold text-brand-600">
+              Real world experiences
+            </h2>
+            <Heading className="text-center">What our customers say</Heading>
+          </div>
+
+          <div className="mx-auto grid max-w-2xl grid-cols-1 divide-y divide-gray-200 px-4 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:divide-x lg:divide-y-0">
+            {/* First customer review */}
+            <div className="flex flex-auto flex-col gap-4 rounded-t-[2rem] bg-brand-25 p-6 sm:p-8 lg:rounded-l-[2rem] lg:rounded-tr-none lg:p-16">
+              <div className="mb-2 flex justify-center gap-0.5 lg:justify-start">
+                <Star className="size-5 fill-brand-600 text-brand-600" />
+                <Star className="size-5 fill-brand-600 text-brand-600" />
+                <Star className="size-5 fill-brand-600 text-brand-600" />
+                <Star className="size-5 fill-brand-600 text-brand-600" />
+                <Star className="size-5 fill-brand-600 text-brand-600" />
+              </div>
+
+              <p className="text-pretty text-center text-base font-medium tracking-tight text-brand-950 sm:text-lg lg:text-left lg:text-lg/8">
+                PingPanda has been a gamechanger for me. I've been using it for
+                2 months now and seeing sales pop up in real-time is super
+                satisfying
+              </p>
+
+              <div className="mt-2 flex flex-col items-center justify-center gap-4 sm:flex-row sm:items-start lg:justify-start">
+                <Image
+                  src="/user-2.png"
+                  className="rounded-full object-cover"
+                  alt="Aayuuuuuu"
+                  width={48}
+                  height={48}
+                />
+                <div className="flex flex-col items-center sm:items-start">
+                  <p className="flex items-center font-semibold">
+                    Aayusha Pokhrel
+                    <Icons.verificationBadge className="ml-1.5 inline-block size-4" />
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    @aayushapokhrel0
+                  </p>
+                </div>
+              </div>
+            </div>
+            {/* Second customer review */}
+            <div className="flex flex-auto flex-col gap-4 rounded-b-[2rem] bg-brand-25 p-6 sm:p-8 lg:rounded-r-[2rem] lg:rounded-bl-none lg:p-16">
+              <div className="mb-2 flex justify-center gap-0.5 lg:justify-start">
+                <Star className="size-5 fill-brand-600 text-brand-600" />
+                <Star className="size-5 fill-brand-600 text-brand-600" />
+                <Star className="size-5 fill-brand-600 text-brand-600" />
+                <Star className="size-5 fill-brand-600 text-brand-600" />
+                <Star className="size-5 fill-brand-600 text-brand-600" />
+              </div>
+
+              <p className="text-pretty text-center text-base font-medium tracking-tight text-brand-950 sm:text-lg lg:text-left lg:text-lg/8">
+                J aayusha le bhanchey tyei.
+              </p>
+
+              <div className="mt-2 flex flex-col items-center justify-center gap-4 sm:flex-row sm:items-start lg:justify-start">
+                <Image
+                  src="/user-1.png"
+                  className="rounded-full object-cover"
+                  alt="rijal"
+                  width={48}
+                  height={48}
+                />
+                <div className="flex flex-col items-center sm:items-start">
+                  <p className="flex items-center font-semibold">
+                    Darshan Rijal
+                    <Icons.verificationBadge className="ml-1.5 inline-block size-4" />
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    @darshanrijal0
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ShinyButton
+            href="/sign-up"
+            className="relative z-10 h-14 w-full max-w-xs text-base shadow-lg transition-shadow duration-300 hover:shadow-xl"
+          >
+            Start for free today
+          </ShinyButton>
+        </MaxWidthWrapper>
+      </section>
     </>
   );
 }

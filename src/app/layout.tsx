@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Providers from "./providers";
+import Toploader from "nextjs-toploader";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -20,6 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
+        <Toploader color="#4B76C9" />
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -20,9 +20,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased`}>
+      <body
+        className={`${inter.className} flex min-h-[calc(100vh-1px)] flex-col antialiased`}
+      >
         <Toploader color="#4B76C9" showSpinner={false} height={2.8} />
-        <Providers>{children}</Providers>
+        <main className="relative flex flex-1 flex-col">
+          <Providers>{children}</Providers>
+        </main>
       </body>
     </html>
   );

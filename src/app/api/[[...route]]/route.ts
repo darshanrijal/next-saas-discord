@@ -1,12 +1,29 @@
+import db from "@/lib/db"
+import { userTable } from "@/lib/db/schema"
+import { currentUser } from "@clerk/nextjs/server"
 import { Hono } from "hono"
 import { handle } from "hono/vercel"
 
-export const runtime = "edge"
-
-const app = new Hono().basePath("/api").get("/hello", (c) => {
-  return c.json({
-    message: "Hello Next.js!",
+const app = new Hono().basePath("/api").post("/synchronize", async (c) => {
+  const auth = await currentUser()
+  if (!auth) {
+    return c.json({ isSync: false }, 400)
+  }
+  const user = await db.query.userTable.findFirst({
+    where(fields, operators) {
+      return operators.eq(fields.externalId, auth.id)
+    },
   })
+
+  if (!user) {
+    await db.insert(userTable).values({
+      quotaLimit: 100,
+      email: auth.emailAddresses[0].emailAddress,
+      externalId: auth.id,
+    })
+  }
+
+  return c.json({ isSync: true })
 })
 
 export type AppType = typeof app

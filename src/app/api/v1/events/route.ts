@@ -108,7 +108,7 @@ export async function POST(req: NextRequest) {
         `A new ${category.name} event has occured!`,
       color: category.color,
       timestamp: new Date().toISOString(),
-      fields: Object.entries(validatonResult.fields ?? []).map(
+      fields: Object.entries(validatonResult.fields ?? {}).map(
         ([key, value]) => ({
           name: key,
           value: String(value),
@@ -137,34 +137,28 @@ export async function POST(req: NextRequest) {
       })
       .where(eq(eventTable.id, event.id))
 
-    await db.transaction(async (tx) => {
-      const q = await tx.query.quotaTable.findFirst({
-        where: and(
-          eq(quotaTable.userId, user.id),
-          eq(quotaTable.month, currentMonth),
-          eq(quotaTable.year, currentYear),
-        ),
-      })
-      if (q) {
-        await tx
-          .update(quotaTable)
-          .set({
-            count: sql`${quotaTable.count} + 1`,
-          })
-          .where(eq(quotaTable.id, q.id))
-          .returning()
-      }
-
-      await tx
-        .insert(quotaTable)
-        .values({
-          userId: user.id,
-          month: currentMonth,
-          year: currentYear,
-          count: 1,
-        })
-        .returning()
+    const q = await db.query.quotaTable.findFirst({
+      where: and(
+        eq(quotaTable.userId, user.id),
+        eq(quotaTable.month, currentMonth),
+        eq(quotaTable.year, currentYear),
+      ),
     })
+    if (q) {
+      await db
+        .update(quotaTable)
+        .set({
+          count: sql`${quotaTable.count} + 1`,
+        })
+        .where(eq(quotaTable.id, q.id))
+    } else {
+      await db.insert(quotaTable).values({
+        userId: user.id,
+        month: currentMonth,
+        year: currentYear,
+        count: 1,
+      })
+    }
 
     return Response.json(
       { message: "Event processed successfully" },
@@ -172,7 +166,7 @@ export async function POST(req: NextRequest) {
     )
   } catch (error) {
     if (error instanceof ZodError) {
-      return Response.json({ error: error.message }, { status: 500 })
+      return Response.json({ error: error.message }, { status: 422 })
     }
     if (error instanceof Error) {
       return Response.json({ error: error.message }, { status: 500 })

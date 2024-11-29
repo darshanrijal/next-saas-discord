@@ -123,19 +123,19 @@ export const categoryRouter = new Hono()
       .insert(eventCategoryTable)
       .values([
         {
-          name: "Bug",
+          name: "bug",
           emoji: "🐛",
           color: 0xff6b6b,
           userId: user.id,
         },
         {
-          name: "Sale",
+          name: "sale",
           emoji: "💰",
           color: 0xffeb3b,
           userId: user.id,
         },
         {
-          name: "Questions",
+          name: "questions",
           emoji: "🤔",
           color: 0x6c5ce7,
           userId: user.id,

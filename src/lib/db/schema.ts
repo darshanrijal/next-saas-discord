@@ -1,5 +1,5 @@
 import { createId } from "@paralleldrive/cuid2"
-import { relations } from "drizzle-orm"
+import { InferSelectModel, relations } from "drizzle-orm"
 import {
   index,
   integer,
@@ -43,6 +43,8 @@ export const userTable = pgTable(
   }),
 )
 
+export type User = InferSelectModel<typeof userTable>
+
 export const userRelations = relations(userTable, ({ many }) => ({
   eventCategories: many(eventCategoryTable),
   events: many(eventTable),
@@ -68,6 +70,8 @@ export const eventCategoryTable = pgTable(
     uniqueNameUserId: uniqueIndex().on(t.name, t.userId),
   }),
 )
+
+export type EventCategory = InferSelectModel<typeof eventCategoryTable>
 
 export const eventCategoryRelations = relations(
   eventCategoryTable,
@@ -102,6 +106,8 @@ export const eventTable = pgTable(
   }),
 )
 
+export type Event = InferSelectModel<typeof eventTable>
+
 export const eventRelations = relations(eventTable, ({ one }) => ({
   user: one(userTable, {
     fields: [eventTable.userId],
@@ -126,9 +132,17 @@ export const quotaTable = pgTable("quotas", {
     .$onUpdate(() => new Date()),
 })
 
+export type Quota = InferSelectModel<typeof quotaTable>
+
 export const quotaRelations = relations(quotaTable, ({ one }) => ({
   user: one(userTable, {
     fields: [quotaTable.userId],
     references: [userTable.id],
   }),
 }))
+
+// Types
+
+export type EventCategoryWithEvents = EventCategory & {
+  events: Event[]
+}

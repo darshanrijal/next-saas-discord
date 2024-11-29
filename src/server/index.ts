@@ -1,5 +1,5 @@
 import db from "@/lib/db"
-import { userTable } from "@/lib/db/schema"
+import { type User, userTable } from "@/lib/db/schema"
 import { currentUser } from "@clerk/nextjs/server"
 import { eq } from "drizzle-orm"
 import { createMiddleware } from "hono/factory"
@@ -7,11 +7,11 @@ import { HTTPException } from "hono/http-exception"
 
 type AuthCTX = {
   Variables: {
-    user: DBUser
+    user: User
   }
 }
 
-export const authMiddlewate = createMiddleware<AuthCTX>(async (c, next) => {
+export const authMiddleware = createMiddleware<AuthCTX>(async (c, next) => {
   const authHeader = c.req.header("Authorization")
 
   if (authHeader) {

@@ -4,10 +4,11 @@ import { startOfMonth } from "date-fns"
 import { and, eq, gte } from "drizzle-orm"
 import { Hono } from "hono"
 import SuperJSON from "superjson"
-import { authMiddlewate as authMiddleware } from "."
+import { authMiddleware } from "."
 import { zValidator } from "@hono/zod-validator"
 import { createEventCategorySchema } from "@/lib/validation"
 import { parseColor } from "@/lib/utils"
+import { HTTPException } from "hono/http-exception"
 
 export const categoryRouter = new Hono()
   .get("/event-categories", authMiddleware, async (c) => {
@@ -143,4 +144,24 @@ export const categoryRouter = new Hono()
       .returning()
 
     return c.json({ count: categories.length })
+  })
+  .get("/poll-category/:name", authMiddleware, async (c) => {
+    const user = c.get("user")
+    const name = c.req.param("name")
+    const category = await db.query.eventCategoryTable.findFirst({
+      where: and(
+        eq(eventCategoryTable.userId, user.id),
+        eq(eventCategoryTable.name, name),
+      ),
+      with: {
+        events: true,
+      },
+    })
+
+    if (!category)
+      throw new HTTPException(404, { message: `category ${name} not found` })
+
+    const hasEvents = !!category.events.length
+
+    return c.json({ hasEvents })
   })

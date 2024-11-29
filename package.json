@@ -10,20 +10,25 @@
     "db:push": "drizzle-kit push --config=drizzle.config.ts",
     "db:migrate": "drizzle-kit generate --config=drizzle.config.ts"
   },
-  "packageManager": "bun@1.1.37",
-  "overrides": {
-    "react": "$react",
-    "react-dom": "$react-dom"
+  "pnpm": {
+    "overrides": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    }
   },
   "dependencies": {
     "@clerk/nextjs": "^6.5.0",
     "@hono/zod-validator": "^0.4.1",
+    "@hookform/resolvers": "^3.9.1",
+    "@paralleldrive/cuid2": "^2.2.2",
+    "@radix-ui/react-dialog": "^1.1.2",
+    "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-slot": "^1.1.0",
     "@t3-oss/env-nextjs": "^0.11.1",
     "@tanstack/react-query": "^5.61.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "cuid": "^3.0.0",
+    "date-fns": "^4.1.0",
     "drizzle-orm": "^0.36.4",
     "framer-motion": "^11.11.17",
     "hono": "^4.6.12",
@@ -34,10 +39,12 @@
     "postgres": "^3.4.5",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-dom": "19.0.0-rc-66855b96-20241106",
+    "react-hook-form": "^7.53.2",
     "react-syntax-highlighter": "^15.6.1",
     "superjson": "^2.2.1",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
+    "vaul": "^1.1.1",
     "zod": "^3.23.8"
   },
   "devDependencies": {

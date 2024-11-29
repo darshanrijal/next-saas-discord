@@ -1,4 +1,4 @@
-import cuid from "cuid"
+import { createId } from "@paralleldrive/cuid2"
 import { relations } from "drizzle-orm"
 import {
   index,
@@ -29,7 +29,7 @@ export const userTable = pgTable(
     quotaLimit: integer("quota_limit").notNull(),
     plan: planEnum().notNull().default("FREE"),
     email: varchar({ length: 255 }).notNull().unique(),
-    apiKey: text("api_key").notNull().unique().default(cuid()),
+    apiKey: text("api_key").notNull().unique().default(createId()),
     discordId: text("discord_id"),
     createdAt: timestamp("created_at").notNull().defaultNow(),
     updatedAt: timestamp("updated_at", { mode: "date" })

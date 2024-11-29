@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Providers from "./providers";
 import Toploader from "nextjs-toploader";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -25,7 +26,9 @@ export default function RootLayout({
       >
         <Toploader color="#4B76C9" showSpinner={false} height={2.8} />
         <main className="relative flex flex-1 flex-col">
-          <Providers>{children}</Providers>
+          <Providers>
+            <NuqsAdapter>{children}</NuqsAdapter>
+          </Providers>
         </main>
       </body>
     </html>

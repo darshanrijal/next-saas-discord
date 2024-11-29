@@ -14,5 +14,22 @@ export class DiscordClient {
 
   async createDM(
     userId: string,
-  ): Promise<RESTPostAPICurrentUserCreateDMChannelResult> {}
+  ): Promise<RESTPostAPICurrentUserCreateDMChannelResult> {
+    return this.rest.post(Routes.userChannels(), {
+      body: {
+        recipient_id: userId,
+      },
+    }) as Promise<RESTPostAPICurrentUserCreateDMChannelResult>
+  }
+
+  async sendEmbed(
+    channelId: string,
+    embed: APIEmbed,
+  ): Promise<RESTPostAPIChannelMessageResult> {
+    return this.rest.post(Routes.channelMessages(channelId), {
+      body: {
+        embeds: [embed],
+      },
+    }) as Promise<RESTPostAPIChannelMessageResult>
+  }
 }

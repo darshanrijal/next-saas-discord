@@ -41,7 +41,6 @@ export const DashboardPageContent = () => {
         await queryClient.cancelQueries({
           queryKey: ["user-event-categories"],
         });
-        const prevState = queryClient.getQueryData(["user-event-categories"]);
         queryClient.setQueryData<CategoryResponse>(
           ["user-event-categories"],
           (oldData) => {

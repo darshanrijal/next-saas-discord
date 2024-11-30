@@ -6,6 +6,7 @@ const env = createEnv({
     DATABASE_URL: z.string().url(),
     CLERK_SECRET_KEY: z.string().startsWith("sk_test_"),
     STRIPE_SECRET_KEY: z.string().startsWith("sk_test_"),
+    STRIPE_WEBHOOK_KEY: z.string(),
   },
   client: {
     NEXT_PUBLIC_BASE_URL: z.string().url(),

@@ -1,6 +1,8 @@
 import db from "@/lib/db"
 import { userTable } from "@/lib/db/schema"
 import { categoryRouter } from "@/server/category-router"
+import { paymentRouter } from "@/server/payment-router"
+import { projectRouter } from "@/server/project-router"
 import { currentUser } from "@clerk/nextjs/server"
 import { Hono } from "hono"
 import { handle } from "hono/vercel"
@@ -29,6 +31,8 @@ const app = new Hono()
     return c.json({ isSync: true })
   })
   .route("/categories", categoryRouter)
+  .route("/payments", paymentRouter)
+  .route("/project", projectRouter)
 
 export type AppType = typeof app
 

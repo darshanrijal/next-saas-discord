@@ -14,6 +14,9 @@ import {
 } from "drizzle-orm/pg-core"
 
 export const planEnum = pgEnum("Plan", ["FREE", "PRO"])
+
+export type Plan = (typeof planEnum)["enumValues"][number]
+
 export const deliveryStatusEnum = pgEnum("DeliveryStatus", [
   "PENDING",
   "DELIVERED",

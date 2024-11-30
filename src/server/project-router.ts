@@ -2,15 +2,15 @@ import { Hono } from "hono"
 import { authMiddleware } from "."
 import { addMonths, startOfMonth } from "date-fns"
 import db from "@/lib/db"
-import { eventCategoryTable } from "@/lib/db/schema"
+import { eventCategoryTable, userTable } from "@/lib/db/schema"
 import { eq } from "drizzle-orm"
 import { FREE_QUOTA, PRO_QUOTA } from "@/constants"
 import SuperJSON from "superjson"
+import { zValidator } from "@hono/zod-validator"
+import { z } from "zod"
 
-export const projectRouter = new Hono().get(
-  "/get-usage",
-  authMiddleware,
-  async (c) => {
+export const projectRouter = new Hono()
+  .get("/get-usage", authMiddleware, async (c) => {
     const user = c.get("user")
     const currDate = startOfMonth(new Date())
 
@@ -45,5 +45,26 @@ export const projectRouter = new Hono().get(
 
     const serializedData = SuperJSON.serialize(data)
     return c.json(serializedData)
-  },
-)
+  })
+  .patch(
+    "/set-discord-id",
+    zValidator(
+      "query",
+      z.object({
+        discordId: z.string().max(20),
+      }),
+    ),
+    authMiddleware,
+    async (c) => {
+      const { discordId } = c.req.valid("query")
+      const user = c.get("user")
+      await db
+        .update(userTable)
+        .set({
+          discordId,
+        })
+        .where(eq(userTable.id, user.id))
+
+      return new Response()
+    },
+  )
